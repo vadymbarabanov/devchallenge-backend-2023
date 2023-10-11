@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  golang-backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: golang-backend
+    restart: on-failure
+    environment:
+      - DATABASE_URL=${DATABASE_URL}  
+    ports:
+      - 8080:8080
+    depends_on:
+      - db-postgres
+
+  db-postgres:
+    image: postgres:latest
+    container_name: db-postgres
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - '5432:5432'
+    
